@@ -1,0 +1,325 @@
+POST http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "name": "2 Ex7",
+  "port": 4569,
+  "protocol": "http",
+  "stubs": [
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "GET",
+            "path": "/api/clientes"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": [
+              {
+                "id": 1,
+                "nome": "João Silva",
+                "email": "joao@email.com"
+              },
+              {
+                "id": 2,
+                "nome": "Maria Costa",
+                "email": "maria@email.com"
+              }
+            ]
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "POST",
+            "path": "/api/clientes"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 201,
+            "headers": {
+              "Content-Type": "application/json",
+              "Location": "/api/clientes/3"
+            },
+            "body": {
+              "id": 3,
+              "status": "cliente criado"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "GET",
+            "path": "/api/clientes/999/pedidos"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 404,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "error": "Cliente não encontrado"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "GET",
+            "path": "/api/clientes/1/pedidos"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": [
+              {
+                "id": 1,
+                "cliente_id": 1,
+                "produto": "Teclado",
+                "quantidade": 2,
+                "estado": "Em processamento"
+              },
+              {
+                "id": 2,
+                "cliente_id": 1,
+                "produto": "Rato",
+                "quantidade": 1,
+                "estado": "Enviado"
+              }
+            ]
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "POST",
+            "path": "/api/pedidos"
+          }
+        },
+        {
+          "matches": {
+            "body": "\"quantidade\"\\s*:\\s*(0|1)"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 400,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "error": "Quantidade inválida"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "POST",
+            "path": "/api/pedidos"
+          }
+        },
+        {
+          "matches": {
+            "body": "\"cliente_id\"\\s*:\\s*999"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 404,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "error": "Cliente inexistente"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "POST",
+            "path": "/api/pedidos"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 201,
+            "headers": {
+              "Content-Type": "application/json",
+              "Location": "/api/pedidos/3"
+            },
+            "body": {
+              "id": 3,
+              "cliente_id": 1,
+              "produto": "Monitor",
+              "quantidade": 1,
+              "estado": "Em processamento"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "PUT",
+            "path": "/api/pedidos/1"
+          }
+        },
+        {
+          "matches": {
+            "body": "\"estado\"\\s*:\\s*\"(Em processamento|Enviado|Entregue)\""
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "id": 1,
+              "status": "estado atualizado"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "PUT",
+            "path": "/api/pedidos/1"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 400,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "error": "Estado inválido (apenas: Em processamento, Enviado, Entregue)"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "DELETE",
+            "path": "/api/pedidos/1"
+          }
+        },
+        {
+          "matches": {
+            "body": "\"estado\"\\s*:\\s*\"(Enviado|Entregue)\""
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 403,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "error": "Só é possível cancelar pedidos em processamento"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "DELETE",
+            "path": "/api/pedidos/1"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "message": "Pedido cancelado"
+            }
+          }
+        }
+      ]
+    }
+
+  ]
+}

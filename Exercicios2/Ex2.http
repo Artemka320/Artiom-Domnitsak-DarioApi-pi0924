@@ -1,0 +1,249 @@
+POST http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "name": "2 Ex2",
+  "port": 4564,
+  "protocol": "http",
+  "stubs": [
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "POST",
+            "path": "/api/produtos"
+          }
+        },
+        {
+          "matches": {
+            "body": "\"quantidade\"\\s*:\\s*-"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 400,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "error": "Valor inválido"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "GET",
+            "path": "/api/produtos"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": [
+              {
+                "id": 1,
+                "nome": "Mouse",
+                "preco": 15,
+                "quantidade": 10
+              },
+              {
+                "id": 2,
+                "nome": "Teclado",
+                "preco": 30,
+                "quantidade": 0
+              }
+            ]
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "GET",
+            "path": "/api/produtos/1"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "id": 1,
+              "nome": "Mouse",
+              "preco": 15,
+              "quantidade": 10
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "GET",
+            "path": "/api/produtos/999"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 404,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "error": "Produto não encontrado"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "POST",
+            "path": "/api/produtos"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 201,
+            "headers": {
+              "Content-Type": "application/json",
+              "Location": "/api/produtos/3"
+            },
+            "body": {
+              "id": 3,
+              "status": "created"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "PUT",
+            "path": "/api/produtos/1/stock"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "id": 1,
+              "status": "stock_updated"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "PUT",
+            "path": "/api/produtos/999/stock"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 404,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "error": "Produto não encontrado"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "DELETE",
+            "path": "/api/produtos/1"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 409,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "error": "Stock diferente de zero"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "DELETE",
+            "path": "/api/produtos/2"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "message": "Produto removido"
+            }
+          }
+        }
+      ]
+    }
+
+  ]
+}

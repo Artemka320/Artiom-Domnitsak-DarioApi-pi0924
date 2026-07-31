@@ -1,0 +1,251 @@
+POST http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "name": "2 Ex4",
+  "port": 4566,
+  "protocol": "http",
+  "stubs": [
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "GET",
+            "path": "/api/livros"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": [
+              {
+                "id": 1,
+                "titulo": "1984",
+                "autor": "George Orwell",
+                "disponivel": true
+              },
+              {
+                "id": 2,
+                "titulo": "Os Maias",
+                "autor": "Eça de Queirós",
+                "disponivel": false
+              }
+            ]
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "GET",
+            "path": "/api/livros/1"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "id": 1,
+              "titulo": "1984",
+              "autor": "George Orwell",
+              "descricao": "Distopia sobre vigilância total"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "GET",
+            "path": "/api/livros/999"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 404,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "error": "Livro não encontrado"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "POST",
+            "path": "/api/emprestimos"
+          }
+        },
+        {
+          "matches": {
+            "body": "\"livro_id\"\\s*:\\s*2"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 409,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "error": "Livro já está emprestado"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "POST",
+            "path": "/api/emprestimos"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 201,
+            "headers": {
+              "Content-Type": "application/json",
+              "Location": "/api/emprestimos/1"
+            },
+            "body": {
+              "id": 1,
+              "cliente": "Joao",
+              "livro_id": 1,
+              "status": "emprestado"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "PUT",
+            "path": "/api/emprestimos/1/devolucao"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "id": 1,
+              "status": "devolvido"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "PUT",
+            "path": "/api/emprestimos/999/devolucao"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 404,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "error": "Empréstimo não encontrado"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "DELETE",
+            "path": "/api/livros/2"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 409,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "error": "Livro não pode ser removido porque está emprestado"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "DELETE",
+            "path": "/api/livros/1"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "message": "Livro removido com sucesso"
+            }
+          }
+        }
+      ]
+    }
+
+  ]
+}

@@ -1,0 +1,253 @@
+POST http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "name": "2 Ex3",
+  "port": 4565,
+  "protocol": "http",
+  "stubs": [
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "POST",
+            "path": "/api/reservas"
+          }
+        },
+        {
+          "matches": {
+            "body": "\"checkout\"\\s*:\\s*\"2025-06-18\""
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 400,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "error": "checkout anterior ao checkin"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "POST",
+            "path": "/api/reservas"
+          }
+        },
+        {
+          "matches": {
+            "body": "\"tipo_quarto\"\\s*:\\s*\"suite\""
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 409,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "error": "Sem disponibilidade"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "GET",
+            "path": "/api/reservas"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": [
+              {
+                "id": 1,
+                "cliente": "Joao",
+                "checkin": "2025-07-20",
+                "checkout": "2025-07-25",
+                "tipo_quarto": "single"
+              },
+              {
+                "id": 2,
+                "cliente": "Martim",
+                "checkin": "2025-08-01",
+                "checkout": "2025-08-05",
+                "tipo_quarto": "double"
+              }
+            ]
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "POST",
+            "path": "/api/reservas"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 201,
+            "headers": {
+              "Content-Type": "application/json",
+              "Location": "/api/reservas/3"
+            },
+            "body": {
+              "id": 3,
+              "status": "created"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "PUT",
+            "path": "/api/reservas/1"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "id": 1,
+              "status": "updated"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "PUT",
+            "path": "/api/reservas/999"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 404,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "error": "Reserva não encontrada"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "PUT",
+            "path": "/api/reservas/2"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 403,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "error": "Alteração não permitida a menos de 24h do checkin"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "DELETE",
+            "path": "/api/reservas/1"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "message": "Reserva cancelada"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "DELETE",
+            "path": "/api/reservas/2"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 403,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "error": "Não é possível cancelar após o checkin"
+            }
+          }
+        }
+      ]
+    }
+
+  ]
+}

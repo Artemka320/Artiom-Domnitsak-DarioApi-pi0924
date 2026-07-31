@@ -1,0 +1,232 @@
+POST http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "name": "2 Ex5",
+  "port": 4567,
+  "protocol": "http",
+  "stubs": [
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "GET",
+            "path": "/api/funcionarios"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": [
+              {
+                "id": 1,
+                "nome": "Ana Silva",
+                "cargo": "Programadora",
+                "salario": 1200
+              },
+              {
+                "id": 2,
+                "nome": "João Costa",
+                "cargo": "Analista",
+                "salario": 950
+              }
+            ]
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "POST",
+            "path": "/api/funcionarios"
+          }
+        },
+        {
+          "matches": {
+            "body": "\"salario\"\\s*:\\s*(\\d{1,3}|7[0-5][0-9])"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 400,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "error": "Salário inferior ao mínimo (760€)"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "POST",
+            "path": "/api/funcionarios"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 201,
+            "headers": {
+              "Content-Type": "application/json",
+              "Location": "/api/funcionarios/3"
+            },
+            "body": {
+              "id": 3,
+              "status": "criado"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "PUT",
+            "path": "/api/funcionarios/1/salario"
+          }
+        },
+        {
+          "matches": {
+            "body": "\"salario\"\\s*:\\s*(0|[1-7][0-5][0-9])"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 400,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "error": "Salário não pode ser inferior ao mínimo"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "PUT",
+            "path": "/api/funcionarios/1/salario"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "id": 1,
+              "status": "salario atualizado"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "PUT",
+            "path": "/api/funcionarios/999/salario"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 404,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "error": "Funcionário não encontrado"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "DELETE",
+            "path": "/api/funcionarios/1"
+          }
+        },
+        {
+          "matches": {
+            "body": "\"tarefas_pendentes\"\\s*:\\s*true"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 409,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "error": "Funcionário com tarefas pendentes não pode ser removido"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "DELETE",
+            "path": "/api/funcionarios/2"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "message": "Funcionário removido com sucesso"
+            }
+          }
+        }
+      ]
+    }
+
+  ]
+}
