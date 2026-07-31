@@ -1,0 +1,29 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\PAF2024#\\Documents\\GitHub\\GuilhermeCabrita-Pi0924_UFCD10792\\RentCars\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "C:\\Users\\PAF2024#\\Documents\\GitHub\\GuilhermeCabrita-Pi0924_UFCD10792\\RentCars\\wwwroot\\script.js",
+      "PackagePath": "staticwebassets\\script.js"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.RentCars.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.RentCars.props",
+      "PackagePath": "build\\RentCars.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.RentCars.props",
+      "PackagePath": "buildMultiTargeting\\RentCars.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.RentCars.props",
+      "PackagePath": "buildTransitive\\RentCars.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

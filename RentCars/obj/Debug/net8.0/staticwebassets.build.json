@@ -1,0 +1,58 @@
+{
+  "Version": 1,
+  "Hash": "MIdJ7nRQfCvkWvNDIeLVynkb/BeDIEbwZCkCqB/YBGY=",
+  "Source": "RentCars",
+  "BasePath": "_content/RentCars",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "RentCars\\wwwroot",
+      "Source": "RentCars",
+      "ContentRoot": "C:\\Users\\PAF2024#\\Documents\\GitHub\\GuilhermeCabrita-Pi0924_UFCD10792\\RentCars\\wwwroot\\",
+      "BasePath": "_content/RentCars",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\PAF2024#\\Documents\\GitHub\\GuilhermeCabrita-Pi0924_UFCD10792\\RentCars\\wwwroot\\index.html",
+      "SourceId": "RentCars",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\PAF2024#\\Documents\\GitHub\\GuilhermeCabrita-Pi0924_UFCD10792\\RentCars\\wwwroot\\",
+      "BasePath": "_content/RentCars",
+      "RelativePath": "index.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\index.html"
+    },
+    {
+      "Identity": "C:\\Users\\PAF2024#\\Documents\\GitHub\\GuilhermeCabrita-Pi0924_UFCD10792\\RentCars\\wwwroot\\script.js",
+      "SourceId": "RentCars",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\PAF2024#\\Documents\\GitHub\\GuilhermeCabrita-Pi0924_UFCD10792\\RentCars\\wwwroot\\",
+      "BasePath": "_content/RentCars",
+      "RelativePath": "script.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\script.js"
+    }
+  ]
+}

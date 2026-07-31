@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h2>Rent a Car</h2>
+    <h3>Carros disponíveis:</h3>
+
+    <button onclick="mostrarCarros()">Ver lista</button>
+    <ul id="listaCarros"></ul>
+    <br>
+
+    <h3>Reservar um carro:</h3>
+
+    <input type="text" id="Marca" placeholder="Marca do carro">
+    <br><br>
+    <input type="text" id="Modelo" placeholder="Modelo do carro">
+    <br>
+
+    <button onclick="reservarCarro()">Reservar carro</button>
+
+    <p id="mensagem"></p>
+
+    <h3>Carros reservados:</h3>
+    <button onclick="mostrarReservados()">Ver lista</button>
+    <ul id="listaReservados"></ul>
+    <br>
+
+    <h3>Adicionar Carro:</h3>
+    <input type="text" id="addMarca" placeholder="Marca">
+    <br><br>
+    <input type="text" id="addModelo" placeholder="Modelo">
+    <br><br>
+    <input type="text" id="addMatricula" placeholder="Matrícula">
+    <br><br>
+    <button onclick="adicionarCarro()">Adicionar</button>
+
+    <script src="script.js"></script>
+</body>
+</html>

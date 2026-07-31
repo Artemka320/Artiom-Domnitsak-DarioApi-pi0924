@@ -1,0 +1,54 @@
+[
+  {
+    "ContainingType": "RentCars.Controllers.ReservaCarController",
+    "Method": "GetCarros",
+    "RelativePath": "ReservaCar/carros",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RentCars.Controllers.ReservaCarController",
+    "Method": "Adicionar",
+    "RelativePath": "ReservaCar/novo",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "response",
+        "Type": "RentCars.Model.ReservaCarResponse",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RentCars.Controllers.ReservaCarController",
+    "Method": "Reservar",
+    "RelativePath": "ReservaCar/reservar",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "RentCars.Model.ReservaCarRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RentCars.Controllers.ReservaCarController",
+    "Method": "GetReservas",
+    "RelativePath": "ReservaCar/reservas",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]
