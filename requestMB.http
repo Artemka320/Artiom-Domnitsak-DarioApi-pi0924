@@ -1,0 +1,38 @@
+POST http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "name": "API 3",
+  "port": 4547,
+  "protocol": "http",
+  "stubs": [{
+    "responses": [
+      { "is": { "statusCode": 200,
+                "body":{"Msg":"OLA MUNDO"}
+        }
+       }
+    ],
+    "predicates": [{
+      "and": [
+        {
+          "equals": {
+            "path": "/PI0924",
+            "method": "GET",
+            "headers": { "Content-Type": "application/json" }
+          }
+        },
+        {
+          "not": {
+            "contains": { "body": "requiredField" },
+            "caseSensitive": true
+          }
+        }
+      ]
+    }]
+  }]
+}
+
+###
+
+GET http://localhost:4547/PI0924
+Content-Type: application/json
