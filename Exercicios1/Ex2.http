@@ -1,0 +1,49 @@
+POST http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "name": "Ex2",
+  "port": 4549,
+  "protocol": "http",
+  "stubs": [
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "GET",
+            "path": "/api/cars",
+            "query": {
+              "marca":"Toyota"       
+            }
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "marca": "Toyota",
+              "results": [
+                {
+                  "id": 1,
+                  "modelo": "Corolla",
+                  "preco": 15000
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+
+  ]
+}
+
+###
+
+GET http://localhost:4549/api/cars?marca=Toyota
+Content-Type: application/json

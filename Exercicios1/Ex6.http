@@ -1,0 +1,48 @@
+POST http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "name": "Ex6",
+  "port": 4553,
+  "protocol": "http",
+  "stubs": [
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "POST",
+            "path": "/api/users"
+          }
+        },
+        {
+          "contains": {
+            "body": "\"email\":\"exists@example.com\""
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 409,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "error": "email_exists",
+              "message": "Esse email já existe."
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+
+###
+
+POST http://localhost:4553/api/users
+Content-Type: application/json
+
+{
+  "email":"exists@example.com"
+}

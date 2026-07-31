@@ -1,0 +1,79 @@
+POST http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+    "name": "Ex11",
+    "port": 4558,
+    "protocol": "http",
+    "stubs": [
+        {
+            "predicates": [
+                {
+                    "equals":{
+                        "method": "POST",
+                        "path": "/api/tasks"
+                    }
+                },
+                {
+                    "matches": {
+                        "body": "\"title\"\\s*:\\s*\"duplicate\""
+                    }
+                }
+            ],
+            "responses": [
+                {
+                    "is": {
+                        "statusCode": 409,
+                        "headers": {
+                            "Content-Type": "application/json"
+                        },
+                        "body": {
+                            "error": "duplicate_task"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "predicates": [
+                {
+                    "equals":{
+                        "method": "POST",
+                        "path": "/api/tasks"
+                    }
+                },
+                {   
+                    "not": {
+                        "matches": {
+                            "body": "\"title\"\\s*:\\s*\"duplicate\""
+                    }
+                    }
+                }
+            ],
+            "responses": [
+                {
+                    "is": {
+                        "statusCode": 201,
+                        "headers": {
+                            "Content-Type": "application/json",
+                            "Location": "/api/tasks/1"
+                        },
+                        "body": {
+                            "id": 1,
+                            "status": "created"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
+
+###
+
+POST http://localhost:4558/api/tasks
+Content-Type: application/json
+
+{
+    "title": "test"
+}

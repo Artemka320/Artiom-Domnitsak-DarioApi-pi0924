@@ -1,0 +1,65 @@
+POST http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "name": "Ex3",
+  "port": 4550,
+  "protocol": "http",
+  "stubs": [
+        {
+      "predicates": [
+        {
+          "equals": {
+            "method": "GET",
+            "path": "/api/cars",
+            "query": {
+              "marca": "Toyota"
+            }
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "body": {
+              "marca": "Toyota",
+              "results": [
+                {
+                  "id": 1,
+                  "modelo": "Corolla",
+                  "preco": 15000
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "GET",
+            "path": "/api/cars"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "body": {
+              "results": []
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+
+###
+
+GET http://localhost:4550/api/cars?marca=Yamaha
+Content-Type: application/json

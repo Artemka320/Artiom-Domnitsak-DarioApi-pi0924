@@ -1,0 +1,79 @@
+POST http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "name": "Ex9",
+  "port": 4556,
+  "protocol": "http",
+  "stubs": [
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "POST",
+            "path": "/api/temperature"
+          }
+        },
+        {
+        "not": {
+            "contains": {
+            "body": "\"value\""
+            }
+        }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 400,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "error": "missing_field",
+              "message": "É obrigatório ter um value."
+            }
+          }
+        }
+      ]
+    },
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "POST",
+            "path": "/api/temperature"
+          }
+        },
+        {
+          "contains": {
+            "body":  "\"value\""
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 201,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "status": "Created",
+              "message": "Criada com sucesso."
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+
+###
+
+POST http://localhost:4556/api/temperature
+Content-Type: application/json
+
+{
+    "value":"abc"
+}

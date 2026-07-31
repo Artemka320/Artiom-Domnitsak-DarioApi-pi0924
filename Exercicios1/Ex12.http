@@ -1,0 +1,74 @@
+POST http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "name": "Ex12",
+  "port": 4559,
+  "protocol": "http",
+  "stubs": [
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "POST",
+            "path": "/api/auth"
+          }
+        },
+        {
+          "deepEquals": {
+            "body": {
+              "username": "user1",
+              "password": "pass1"
+            }
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "token": "validtoken",
+              "expires_in": 3600
+            }
+          }
+        }
+      ]
+    },
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "POST",
+            "path": "/api/auth"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 401,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "error": "invalid_credentials"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+
+### 
+POST http://localhost:4559/api/auth
+Content-Type: application/json
+
+{
+    "username": "user1",
+    "password": "pass1"
+}

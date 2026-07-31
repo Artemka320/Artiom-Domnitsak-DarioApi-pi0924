@@ -1,0 +1,50 @@
+POST http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "name": "Ex8",
+  "port": 4555,
+  "protocol": "http",
+  "stubs": [
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "POST",
+            "path": "/api/temperature"
+          }
+        },
+        {
+        "not": {
+            "contains": {
+            "body": "\"value\""
+            }
+        }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 400,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "error": "missing_field",
+              "message": "É obrigatório ter um value."
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+
+###
+
+POST http://localhost:4555/api/temperature
+Content-Type: application/json
+
+{
+    "body":""
+}
