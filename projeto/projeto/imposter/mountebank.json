@@ -1,0 +1,35 @@
+{
+    "imposters": [
+        {
+            "port": 4545,
+            "protocol": "http",
+            "stubs": [
+                {
+                    "predicates": [
+                        {
+                            "equals": {
+                                "method": "GET",
+                                "path": "/inventory/123"
+                            }
+                        }
+                    ],
+                    "responses": [
+                        {
+                            "is": {
+                                "statusCode": 200,
+                                "headers": {
+                                    "Content-Type": "application/json"
+                                },
+                                "body": {
+                                    "sku": "123",
+                                    "stock": 42,
+                                    "status": "Disponível via Mountebank"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
